@@ -10,6 +10,7 @@ import javafx.scene.shape.Circle; // player
 import javafx.scene.input.KeyCode;
 // キーイベント
 import javafx.scene.input.KeyEvent;
+import javafx.animation.AnimationTimer;
 
 public class Shooting extends Application {
 	// X, Y （座標）
@@ -36,11 +37,23 @@ public class Shooting extends Application {
 		playerPlace[Y] = 500;
 		player = new Circle(playerPlace[X], playerPlace[Y], 35); // X, Y, 半径
 
+		// ゲームループ
+		new AnimationTimer() {
+			@Override
+			public void handle(long now) {
+				gameLoop();
+				// プレイヤー座標更新
+				player.setCenterX(playerPlace[X]);
+				player.setCenterY(playerPlace[Y]);
+			}
+		}.start();
+
 		// 表示
 		Pane root = new Pane(); // レイアウトコンテナ
 		root.getChildren().addAll(player);
 		Scene scene = new Scene(root, 300, 200);
 		scene.setOnKeyPressed(event -> doKeyAction(event)); // キーイベント
+		scene.setOnKeyReleased(event -> releaseKeyAction(event));
 		stage.setScene(scene);
 		stage.show();
 	}
@@ -49,23 +62,59 @@ public class Shooting extends Application {
 		Application.launch(args);
 	}
 
-	void doKeyAction(KeyEvent event) {
+	// 移動
+	void gameLoop() {
+		final int moveSpeed = 5;
+		if (keyFlag[W]) {
+			playerPlace[Y] -= moveSpeed;
+		}
+		if (keyFlag[S]) {
+			playerPlace[Y] += moveSpeed;
+		}
+		if (keyFlag[A]) {
+			playerPlace[X] -= moveSpeed;
+		}
+		if (keyFlag[D]) {
+			playerPlace[X] += moveSpeed;
+		}
+	}
 
-		if (event.getCode() == KeyCode.W) { // 前進
-			keyFlag[W] = true;
-			System.out.println("W"); // !debug
+	void doKeyAction(KeyEvent event) {
+		switch (event.getCode()) {
+			case W:
+				keyFlag[W] = true;
+				break;
+			case S:
+				keyFlag[S] = true;
+				break;
+			case A:
+				keyFlag[A] = true;
+				break;
+			case D:
+				keyFlag[D] = true;
+				break;
+			default:
+				break;
 		}
-		if (event.getCode() == KeyCode.S) { // 後退
-			keyFlag[S] = true;
-			System.out.println("S"); // !debug
-		}
-		if (event.getCode() == KeyCode.A) { // 左
-			keyFlag[A] = true;
-			System.out.println("A"); // !debug
-		}
-		if (event.getCode() == KeyCode.D) { // 右
-			keyFlag[D] = true;
-			System.out.println("D"); // !debug
+	}
+
+	// キー離したとき
+	void releaseKeyAction(KeyEvent event) {
+		switch (event.getCode()) {
+			case W:
+				keyFlag[W] = false;
+				break;
+			case S:
+				keyFlag[S] = false;
+				break;
+			case A:
+				keyFlag[A] = false;
+				break;
+			case D:
+				keyFlag[D] = false;
+				break;
+			default:
+				break;
 		}
 	}
 }
