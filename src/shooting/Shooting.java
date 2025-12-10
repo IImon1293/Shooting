@@ -7,7 +7,6 @@ import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle; // player
-import javafx.scene.input.KeyCode;
 // キーイベント
 import javafx.scene.input.KeyEvent;
 import javafx.animation.AnimationTimer;
@@ -64,18 +63,20 @@ public class Shooting extends Application {
 
 	// 移動
 	void gameLoop() {
-		final int moveSpeed = 5;
+		final int[] moveSpeed = new int[2];
+		moveSpeed[X] = 5;
+		moveSpeed[Y] = 7;
 		if (keyFlag[W]) {
-			playerPlace[Y] -= moveSpeed;
+			playerPlace[Y] -= moveSpeed[Y];
 		}
 		if (keyFlag[S]) {
-			playerPlace[Y] += moveSpeed;
+			playerPlace[Y] += moveSpeed[Y];
 		}
 		if (keyFlag[A]) {
-			playerPlace[X] -= moveSpeed;
+			playerPlace[X] -= moveSpeed[X];
 		}
 		if (keyFlag[D]) {
-			playerPlace[X] += moveSpeed;
+			playerPlace[X] += moveSpeed[X];
 		}
 	}
 
