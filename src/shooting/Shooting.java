@@ -21,6 +21,9 @@ public class Shooting extends Application {
 	final int A = 2;
 	final int D = 3;
 
+	// ウィンドウ
+	final int WINDOW_WIDTH = 800;
+	final int WINDOW_HEIGHT = 600;
 	// プレイヤー
 	Circle player;
 	int[] playerPlace = new int[2]; // 0 → X, 1 → Y
@@ -29,8 +32,8 @@ public class Shooting extends Application {
 	@Override
 	public void start(Stage stage) throws Exception { // 例外処理
 		stage.setTitle("Shooting!");
-		stage.setWidth(800);
-		stage.setHeight(600);
+		stage.setWidth(WINDOW_WIDTH);
+		stage.setHeight(WINDOW_HEIGHT);
 
 		playerPlace[X] = 400;
 		playerPlace[Y] = 500;
@@ -51,7 +54,8 @@ public class Shooting extends Application {
 		Pane root = new Pane(); // レイアウトコンテナ
 		root.getChildren().addAll(player);
 		Scene scene = new Scene(root, 300, 200);
-		scene.setOnKeyPressed(event -> doKeyAction(event)); // キーイベント
+		// キーイベント
+		scene.setOnKeyPressed(event -> doKeyAction(event));
 		scene.setOnKeyReleased(event -> releaseKeyAction(event));
 		stage.setScene(scene);
 		stage.show();
@@ -63,9 +67,41 @@ public class Shooting extends Application {
 
 	// 移動
 	void gameLoop() {
+		// 参考 : https://nompor.com/2018/01/18/post-2761/
 		final int[] moveSpeed = new int[2];
 		moveSpeed[X] = 5;
 		moveSpeed[Y] = 7;
+		// 800x600 の範囲内で移動
+		if (WINDOW_HEIGHT - player.getRadius() > playerPlace[Y] && playerPlace[Y] > player.getRadius() ) {
+			if (keyFlag[W]) {
+				playerPlace[Y] -= moveSpeed[Y];
+			}
+			if (keyFlag[S]) {
+				playerPlace[Y] += moveSpeed[Y];
+			}
+		} else {
+			if (playerPlace[Y] <= player.getRadius()) {
+				playerPlace[Y] = (int)player.getRadius() + 1;
+			} else if (playerPlace[Y] >= WINDOW_HEIGHT - player.getRadius()) {
+				playerPlace[Y] = WINDOW_HEIGHT - (int)player.getRadius() - 1;
+			}
+		}
+		if (WINDOW_WIDTH - player.getRadius() > playerPlace[X] && playerPlace[X] > player.getRadius() ) {
+			if (keyFlag[A]) {
+				playerPlace[X] -= moveSpeed[X];
+			}
+			if (keyFlag[D]) {
+				playerPlace[X] += moveSpeed[X];
+			}
+		} else {
+			if (playerPlace[X] <= player.getRadius()) {
+				playerPlace[X] = (int)player.getRadius() + 1;
+			} else if (playerPlace[X] >= WINDOW_WIDTH - player.getRadius()) {
+				playerPlace[X] = WINDOW_WIDTH - (int)player.getRadius() - 1;
+			}
+		}
+		// 壁抜け処理なし
+
 		if (keyFlag[W]) {
 			playerPlace[Y] -= moveSpeed[Y];
 		}
