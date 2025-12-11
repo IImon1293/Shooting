@@ -6,7 +6,6 @@ import javafx.stage.Stage;
 // レイアウト、コントロール
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
-import javafx.scene.control.ComboBox;
 import javafx.scene.shape.Circle; // player
 // キーイベント
 import javafx.scene.input.KeyEvent;
@@ -23,13 +22,12 @@ public class Shooting extends Application {
 	final int D = 3;
 
 	// ウィンドウ
-	final int WINDOW_WIDTH = 800;
-	final int WINDOW_HEIGHT = 600;
+	final int WINDOW_WIDTH = 1920;
+	final int WINDOW_HEIGHT = 800;
 	// プレイヤー
 	Circle player;
 	int[] playerPlace = new int[2]; // 0 → X, 1 → Y
-	int playerRad;
-	// キーのフラグ
+	int playerRad = 50;
 	boolean[] keyFlag = new boolean[4]; // W, S, A, D
 
 	@Override
@@ -38,14 +36,8 @@ public class Shooting extends Application {
 		stage.setWidth(WINDOW_WIDTH);
 		stage.setHeight(WINDOW_HEIGHT);
 
-		// メニュー
-		ComboBox<String> gameMenuCmb = new ComboBox<>(); // ゲームメニュー（start, exit, pause, reset）
-		gameMenuCmb.getItems().addAll("Start", "Pause", "Reset", "Exit");
-
 		playerPlace[X] = 400;
 		playerPlace[Y] = 500;
-		playerRad = 35;
-
 		player = new Circle(playerPlace[X], playerPlace[Y], playerRad); // X, Y, 半径
 
 		// ゲームループ
@@ -61,7 +53,7 @@ public class Shooting extends Application {
 
 		// 表示
 		Pane root = new Pane(); // レイアウトコンテナ
-		root.getChildren().addAll(player, gameMenuCmb);
+		root.getChildren().addAll(player);
 		Scene scene = new Scene(root, 300, 200);
 		// キーイベント
 		scene.setOnKeyPressed(event -> doKeyAction(event));
@@ -78,19 +70,20 @@ public class Shooting extends Application {
 	void gameLoop() {
 		// 参考 : https://nompor.com/2018/01/18/post-2761/
 		final int[] moveSpeed = new int[2];
-		moveSpeed[X] = 7;
-		moveSpeed[Y] = 5;
+		moveSpeed[X] = 15;
+		moveSpeed[Y] = 15;
 
-		if (keyFlag[W] && playerRad < playerPlace[Y]) { // プレイヤー全体が画面に収まるようにする
+		if (keyFlag[W] && 0 < playerPlace[Y] - playerRad) { // 上
 			playerPlace[Y] -= moveSpeed[Y];
 		}
-		if (keyFlag[S] && playerPlace[Y] < WINDOW_HEIGHT - playerRad) {
+		if (keyFlag[S] && playerPlace[Y] + playerRad + playerRad/2 < WINDOW_HEIGHT) { // 下
 			playerPlace[Y] += moveSpeed[Y];
+			System.out.println(playerPlace[Y]);
 		}
-		if (keyFlag[A] && playerRad < playerPlace[X]) {
+		if (keyFlag[A]) {
 			playerPlace[X] -= moveSpeed[X];
 		}
-		if (keyFlag[D] && playerPlace[X] < WINDOW_WIDTH - playerRad) {
+		if (keyFlag[D]) {
 			playerPlace[X] += moveSpeed[X];
 		}
 	}
