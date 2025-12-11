@@ -69,8 +69,8 @@ public class Shooting extends Application {
 	void gameLoop() {
 		// 参考 : https://nompor.com/2018/01/18/post-2761/
 		final int[] moveSpeed = new int[2];
-		moveSpeed[X] = 5;
-		moveSpeed[Y] = 7;
+		moveSpeed[X] = 7;
+		moveSpeed[Y] = 5;
 
 		if (keyFlag[W]) {
 			playerPlace[Y] -= moveSpeed[Y];
