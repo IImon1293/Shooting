@@ -29,12 +29,12 @@ public class Shooting extends Application {
 	int[] playerPlace = new int[2]; // 0 → X, 1 → Y
 	int playerRad = 50;
 	boolean[] keyFlag = new boolean[4]; // W, S, A, D
+	// コンテナ
+	Pane root;
 
 	@Override
 	public void start(Stage stage) throws Exception { // 例外処理
 		stage.setTitle("Shooting!");
-		stage.setWidth(WINDOW_WIDTH);
-		stage.setHeight(WINDOW_HEIGHT);
 
 		playerPlace[X] = 400;
 		playerPlace[Y] = 500;
@@ -52,9 +52,9 @@ public class Shooting extends Application {
 		}.start();
 
 		// 表示
-		Pane root = new Pane(); // レイアウトコンテナ
+		root = new Pane();
 		root.getChildren().addAll(player);
-		Scene scene = new Scene(root, 300, 200);
+		Scene scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
 		// キーイベント
 		scene.setOnKeyPressed(event -> doKeyAction(event));
 		scene.setOnKeyReleased(event -> releaseKeyAction(event));
@@ -68,27 +68,41 @@ public class Shooting extends Application {
 
 	// 移動
 	void gameLoop() {
-		// 参考 : https://nompor.com/2018/01/18/post-2761/
+		// WASD 参考 : https://nompor.com/2018/01/18/post-2761/
+		// 現在のシーンの大きさを取得
+		double currentSceneWidth = root.getWidth();
+		double currentSceneHeight = root.getHeight();
+
 		final int[] moveSpeed = new int[2];
 		moveSpeed[X] = 15;
 		moveSpeed[Y] = 15;
 
-		if (keyFlag[W] && 0 < playerPlace[Y] - playerRad) { // 上
+		if (keyFlag[W]) { // 上
 			playerPlace[Y] -= moveSpeed[Y];
-			System.out.printf("Y → %d\n", playerPlace[Y]);
 		}
-		if (keyFlag[S] && playerPlace[Y] + playerRad < WINDOW_HEIGHT) { // 下
+		if (keyFlag[S]) { // 下
 			playerPlace[Y] += moveSpeed[Y];
-			System.out.printf("Y → %d\n", playerPlace[Y]);
 		}
-		if (keyFlag[A] && 0 < playerPlace[X] - playerRad) {
+		if (keyFlag[A]) {
 			playerPlace[X] -= moveSpeed[X];
-			System.out.printf("X → %d\n", playerPlace[X]);
 		}
-		if (keyFlag[D] && playerPlace[X] + playerRad < WINDOW_WIDTH) {
+		if (keyFlag[D]) {
 			playerPlace[X] += moveSpeed[X];
-			System.out.printf("X → %d\n", playerPlace[X]);
 		}
+
+		if (playerPlace[X] < playerRad) { // プレイヤーが上に飛び出す→プレイヤーの座標が上限より半径分下にある
+			playerPlace[X] = playerRad;
+		} else if (playerPlace[X] > currentSceneWidth - playerRad) { // プレイヤーが下に飛び出す→プレイヤーの座標が下限よりプレイヤーの座標が半径分上にある
+			playerPlace[X] = (int) currentSceneWidth - playerRad;
+		}
+
+		if (playerPlace[Y] < playerRad) { // プレイヤーが上に飛び出す→プレイヤーの座標が上限より半径分下にある
+			playerPlace[Y] = playerRad;
+		} else if (playerPlace[Y] > currentSceneHeight - playerRad) { // プレイヤーが下に飛び出す→プレイヤーの座標が下限よりプレイヤーの座標が半径分上にある
+			playerPlace[Y] = (int) currentSceneHeight - playerRad;
+		}
+
+		System.out.printf("X → %d, Y → %d\n", playerPlace[X], playerPlace[Y]);
 	}
 
 	void doKeyAction(KeyEvent event) {
