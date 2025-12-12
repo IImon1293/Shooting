@@ -6,7 +6,9 @@ import javafx.stage.Stage;
 // レイアウト、コントロール
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.HBox;
+import javafx.scene.control.Button;
+import javafx.scene.text.*;
 import javafx.scene.shape.Circle; // player
 // キーイベント
 import javafx.scene.input.KeyEvent;
@@ -21,15 +23,19 @@ public class Shooting extends Application {
     final int S = 1;
     final int A = 2;
     final int D = 3;
+    final int R = 4;
 
-    
+    // ボタン（メニュー）
+    final int BUTTON_SIZE = 30;
+    HBox hb;
+    Button[] gameMenu;
 
     // プレイヤー
     Circle player;
     int[] playerPlace = new int[2]; // 0 → X, 1 → Y
     int playerRad = 50;
     // キー
-    boolean[] keyFlag = new boolean[4]; // W, S, A, D
+    boolean[] keyFlag = new boolean[5]; // W, S, A, D, R
 
     // コンテナ
     Pane root;
@@ -39,10 +45,25 @@ public class Shooting extends Application {
         stage.setTitle("Shooting!");
         stage.setFullScreen(true);
 
-         // Start, Pause, Reset, Exit
+        // メニュー
+        hb = new HBox();
+        gameMenu = new Button[4];
+        gameMenu[0] = new Button("Start");
+        gameMenu[0].setFont(new Font(BUTTON_SIZE));
+        // 1 → Pause
+        gameMenu[1] = new Button("Pause");
+        gameMenu[1].setFont(new Font(BUTTON_SIZE));
+        // 2 → Reset
+        gameMenu[2] = new Button("Reset");
+        gameMenu[2].setFont(new Font(BUTTON_SIZE));
+        // 3 → Exit
+        gameMenu[3] = new Button("Exit");
+        gameMenu[3].setFont(new Font(BUTTON_SIZE));
+        gameMenu[3].setOnAction(event -> windowFin());
+        hb.getChildren().addAll(gameMenu);
 
-        playerPlace[X] = 400;
-        playerPlace[Y] = 500;
+        playerPlace[X] = 700;
+        playerPlace[Y] = 550;
         player = new Circle(playerPlace[X], playerPlace[Y], playerRad); // X, Y, 半径
 
         // ゲームループ
@@ -58,7 +79,7 @@ public class Shooting extends Application {
 
         // 表示
         root = new Pane();
-        root.getChildren().addAll(player, gameMenu);
+        root.getChildren().addAll(player, hb);
         Scene scene = new Scene(root);
         // キーイベント
         scene.setOnKeyPressed(event -> doKeyAction(event));
@@ -71,8 +92,14 @@ public class Shooting extends Application {
         Application.launch(args);
     }
 
-    // 移動
+    /* メソッド */
+    // ボタン
+    void windowFin() {
+        System.exit(0);
+    }
+
     void gameLoop() {
+        /* 移動 */
         // WASD 参考 : https://nompor.com/2018/01/18/post-2761/
         // 現在のシーンの大きさを取得
         double currentSceneWidth = root.getWidth();
@@ -106,7 +133,6 @@ public class Shooting extends Application {
         } else if (playerPlace[Y] > currentSceneHeight - playerRad) { // プレイヤーが下に飛び出す→プレイヤーの座標が下限よりプレイヤーの座標が半径分上にある
             playerPlace[Y] = (int) currentSceneHeight - playerRad;
         }
-
         System.out.printf("X → %d, Y → %d\n", playerPlace[X], playerPlace[Y]);
     }
 
