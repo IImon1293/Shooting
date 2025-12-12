@@ -6,9 +6,7 @@ import javafx.stage.Stage;
 // レイアウト、コントロール
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
+import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle; // player
 // キーイベント
 import javafx.scene.input.KeyEvent;
@@ -24,22 +22,13 @@ public class Shooting extends Application {
     final int A = 2;
     final int D = 3;
 
-    // メニュー
-    // 変数名は適当なので直す（多分）
-    MenuBar gameMenu;
-    Menu kaishiMenu;
-    MenuItem kaishi;
-    Menu pauseMenu;
-    MenuItem pause;
-    Menu yarinaoshiMenu;
-    MenuItem yarinaoshi;
-    Menu owariMenu;
-    MenuItem owari;
+    
 
     // プレイヤー
     Circle player;
     int[] playerPlace = new int[2]; // 0 → X, 1 → Y
     int playerRad = 50;
+    // キー
     boolean[] keyFlag = new boolean[4]; // W, S, A, D
 
     // コンテナ
@@ -50,25 +39,7 @@ public class Shooting extends Application {
         stage.setTitle("Shooting!");
         stage.setFullScreen(true);
 
-        gameMenu = new MenuBar(); // Start, Pause, Reset, Exit
-        // Start
-        kaishiMenu = new Menu("Start");
-        kaishi = new MenuItem("開始");
-        kaishiMenu.getItems().addAll(kaishi);
-        // Pause
-        pauseMenu = new Menu("Pause");
-        pause = new MenuItem("一時停止");
-        pauseMenu.getItems().addAll(pause);
-        // Reset
-        yarinaoshiMenu = new Menu("Reset");
-        yarinaoshi = new Menu("やりなおし");
-        yarinaoshiMenu.getItems().addAll(yarinaoshi);
-        // 終了
-        owariMenu = new Menu("Exit");
-        owari = new MenuItem("終了");
-        owariMenu.getItems().addAll(owari);
-
-        gameMenu.getMenus().addAll(kaishiMenu, pauseMenu, yarinaoshiMenu, owariMenu);
+         // Start, Pause, Reset, Exit
 
         playerPlace[X] = 400;
         playerPlace[Y] = 500;
