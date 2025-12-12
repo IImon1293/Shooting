@@ -22,7 +22,7 @@ public class Shooting extends Application {
 	final int D = 3;
 
 	// ウィンドウ
-	final int WINDOW_WIDTH = 1920;
+	final int WINDOW_WIDTH = 1000;
 	final int WINDOW_HEIGHT = 800;
 	// プレイヤー
 	Circle player;
@@ -75,16 +75,19 @@ public class Shooting extends Application {
 
 		if (keyFlag[W] && 0 < playerPlace[Y] - playerRad) { // 上
 			playerPlace[Y] -= moveSpeed[Y];
+			System.out.printf("Y → %d\n", playerPlace[Y]);
 		}
-		if (keyFlag[S] && playerPlace[Y] + playerRad + playerRad/2 < WINDOW_HEIGHT) { // 下
+		if (keyFlag[S] && playerPlace[Y] + playerRad < WINDOW_HEIGHT) { // 下
 			playerPlace[Y] += moveSpeed[Y];
-			System.out.println(playerPlace[Y]);
+			System.out.printf("Y → %d\n", playerPlace[Y]);
 		}
-		if (keyFlag[A]) {
+		if (keyFlag[A] && 0 < playerPlace[X] - playerRad) {
 			playerPlace[X] -= moveSpeed[X];
+			System.out.printf("X → %d\n", playerPlace[X]);
 		}
-		if (keyFlag[D]) {
+		if (keyFlag[D] && playerPlace[X] + playerRad < WINDOW_WIDTH) {
 			playerPlace[X] += moveSpeed[X];
+			System.out.printf("X → %d\n", playerPlace[X]);
 		}
 	}
 
