@@ -2,17 +2,25 @@ package shooting;
 
 // 基本構成
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 // レイアウト、コントロール
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.HBox;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.text.*;
 import javafx.scene.shape.Circle; // player
+import javafx.animation.Timeline; // timer
+import javafx.event.EventHandler; // timer
+import javafx.util.Duration; // timer
 // キーイベント
 import javafx.scene.input.KeyEvent;
 import javafx.animation.AnimationTimer;
+import javafx.animation.KeyFrame;
 
 public class Shooting extends Application {
     // X, Y （座標）
@@ -23,22 +31,25 @@ public class Shooting extends Application {
     final int S = 1;
     final int A = 2;
     final int D = 3;
-    final int R = 4;
 
     // ボタン（メニュー）
     final int BUTTON_SIZE = 30;
     HBox hb;
     Button[] gameMenu;
 
+    // タイマー
+    Label lb  = new Label("0");
+
     // プレイヤー
     Circle player;
     int[] playerPlace = new int[2]; // 0 → X, 1 → Y
     int playerRad = 50;
     // キー
-    boolean[] keyFlag = new boolean[5]; // W, S, A, D, R
+    boolean[] keyFlag = new boolean[4]; // W, S, A, D
 
     // コンテナ
     Pane root;
+    Timeline limitTimer;
 
     @Override
     public void start(Stage stage) throws Exception { // 例外処理
@@ -62,6 +73,18 @@ public class Shooting extends Application {
         gameMenu[3].setOnAction(event -> windowFin());
         hb.getChildren().addAll(gameMenu);
 
+        // ! タイマー(作業中)
+        // 参考 : https://www.xmisao.com/2014/09/25/javafx-timer.html
+        limitTimer = new Timeline(new KeyFrame(Duration.millis(1000), new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                lb.setText(String.valueOf(Integer.parseInt(lb.getText()) + 1));
+            }
+        }));
+        limitTimer.setCycleCount(Timeline.INDEFINITE);
+        limitTimer.play();
+
+        // プレイヤー
         playerPlace[X] = 700;
         playerPlace[Y] = 550;
         player = new Circle(playerPlace[X], playerPlace[Y], playerRad); // X, Y, 半径
@@ -79,7 +102,7 @@ public class Shooting extends Application {
 
         // 表示
         root = new Pane();
-        root.getChildren().addAll(player, hb);
+        root.getChildren().addAll(player, hb, lb);
         Scene scene = new Scene(root);
         // キーイベント
         scene.setOnKeyPressed(event -> doKeyAction(event));
@@ -94,6 +117,7 @@ public class Shooting extends Application {
 
     /* メソッド */
     // ボタン
+    // Exit
     void windowFin() {
         System.exit(0);
     }
