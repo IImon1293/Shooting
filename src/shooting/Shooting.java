@@ -10,6 +10,7 @@ import javafx.util.Duration;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.text.*;
@@ -38,7 +39,7 @@ public class Shooting extends Application {
     Button[] gameMenu;
 
     // タイマー
-    Label lb  = new Label("0");
+    Label lb = new Label("60");
 
     // プレイヤー
     Circle player;
@@ -78,7 +79,7 @@ public class Shooting extends Application {
         limitTimer = new Timeline(new KeyFrame(Duration.millis(1000), new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                lb.setText(String.valueOf(Integer.parseInt(lb.getText()) + 1));
+                lb.setText(String.valueOf(Integer.parseInt(lb.getText()) - 1));
             }
         }));
         limitTimer.setCycleCount(Timeline.INDEFINITE);
