@@ -2,12 +2,9 @@ package shooting;
 
 // 基本構成
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.stage.Stage;
-import javafx.util.Duration;
-// レイアウト、コントロール
 import javafx.scene.Scene;
+// レイアウト、コントロール
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.AnchorPane;
@@ -21,6 +18,7 @@ import javafx.util.Duration; // timer
 // キーイベント
 import javafx.scene.input.KeyEvent;
 import javafx.animation.AnimationTimer;
+import javafx.event.ActionEvent;
 import javafx.animation.KeyFrame;
 
 public class Shooting extends Application {
@@ -34,12 +32,13 @@ public class Shooting extends Application {
     final int D = 3;
 
     // ボタン（メニュー）
-    final int BUTTON_SIZE = 30;
     HBox hb;
     Button[] gameMenu;
+    final int BUTTON_SIZE = 30;
 
     // タイマー
-    Label lb = new Label("60");
+    Label lb;
+    final int TIMER_SIZE = 40;
 
     // プレイヤー
     Circle player;
@@ -50,6 +49,7 @@ public class Shooting extends Application {
 
     // コンテナ
     Pane root;
+    AnchorPane timerPane;
     Timeline limitTimer;
 
     @Override
@@ -74,12 +74,15 @@ public class Shooting extends Application {
         gameMenu[3].setOnAction(event -> windowFin());
         hb.getChildren().addAll(gameMenu);
 
-        // ! タイマー(作業中)
+        // タイマー
         // 参考 : https://www.xmisao.com/2014/09/25/javafx-timer.html
+        lb = new Label("60"); // タイマーを60秒から開始
+        lb.setFont(new Font(TIMER_SIZE));
         limitTimer = new Timeline(new KeyFrame(Duration.millis(1000), new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 lb.setText(String.valueOf(Integer.parseInt(lb.getText()) - 1));
+                lb.setFont(new Font(TIMER_SIZE));
             }
         }));
         limitTimer.setCycleCount(Timeline.INDEFINITE);
@@ -103,7 +106,7 @@ public class Shooting extends Application {
 
         // 表示
         root = new Pane();
-        root.getChildren().addAll(player, hb, lb);
+        root.getChildren().addAll(player, hb, lb); // プレイヤー, ボタン, タイマー
         Scene scene = new Scene(root);
         // キーイベント
         scene.setOnKeyPressed(event -> doKeyAction(event));
