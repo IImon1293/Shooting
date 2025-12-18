@@ -58,7 +58,7 @@ public class Shooting extends Application {
         // メニュー
         hb = new HBox();
         gameMenu = new Button[4];
-        gameMenu[0] = new Button("Start");  // スタート
+        gameMenu[0] = new Button("Start"); // スタート
         gameMenu[0].setFont(new Font(BUTTON_SIZE));
         // 1 → Pause
         gameMenu[1] = new Button("Pause");
@@ -87,6 +87,26 @@ public class Shooting extends Application {
                 player.setCenterY(playerPlace[Y]);
             }
         }.start();
+
+        // タイマー
+        // 参考 : https://www.xmisao.com/2014/09/25/javafx-timer.html
+        lb = new Label("3"); // タイマーを60秒から開始 // TODO デバッグのために60秒を3秒に変更してるので戻す
+        lb.setFont(new Font(TIMER_SIZE));
+        limitTimer = new Timeline(new KeyFrame(Duration.millis(1000), new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                lb.setText(String.valueOf(Integer.parseInt(lb.getText()) - 1));
+                lb.setFont(new Font(TIMER_SIZE));
+
+                if (lb.getText().equals("0")) {
+                    limitTimer.stop();
+                    System.out.println("制限時間が終了しました。");
+                    // TODO スコアを表示させる
+                }
+            }
+        }));
+        limitTimer.setCycleCount(Timeline.INDEFINITE);
+        limitTimer.play();
 
         // 表示
         root = new AnchorPane();
@@ -190,28 +210,5 @@ public class Shooting extends Application {
             default:
                 break;
         }
-    }
-
-    void LimitTimer() {
-        // タイマー
-        // 参考 : https://www.xmisao.com/2014/09/25/javafx-timer.html
-        lb = new Label("3"); // タイマーを60秒から開始 // TODO デバッグのために60秒を3秒に変更してるので戻す
-        lb.setFont(new Font(TIMER_SIZE));
-        limitTimer = new Timeline(new KeyFrame(Duration.millis(1000), new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                lb.setText(String.valueOf(Integer.parseInt(lb.getText()) - 1));
-                lb.setFont(new Font(TIMER_SIZE));
-
-                if (lb.getText().equals("0")) {
-                    limitTimer.stop();
-                    System.out.println("制限時間が終了しました。");
-                    // TODO スコアを表示させる
-                }
-            }
-        }));
-        limitTimer.setCycleCount(Timeline.INDEFINITE);
-        limitTimer.play();
-
     }
 }
