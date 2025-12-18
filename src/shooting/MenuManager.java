@@ -44,6 +44,7 @@ public class MenuManager {
   /* start */
   void timerStart() {
     System.out.println("タイマー開始");
+    // TODO: (☆)ボタンが押されたらタイマーが開始されるようにする
   }
 
   /* Exit */
