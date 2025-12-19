@@ -5,13 +5,15 @@ import javafx.scene.control.Button;
 import javafx.scene.text.Font;
 
 public class MenuManager {
-  HBox hb;
+  // コンテナ
+  HBox menuRoot;
+  // メニュー
   Button[] gameMenu;
   final int BUTTON_SIZE = 30;
 
-  public MenuManager(Shooting shooting) {
+  public MenuManager(TimerManager timerManager) {
     // コンテナ
-    hb = new HBox();
+    menuRoot = new HBox();
     // メニュー
     gameMenu = new Button[4];
 
@@ -19,13 +21,14 @@ public class MenuManager {
     gameMenu[0] = new Button("Start"); // スタート
     gameMenu[0].setFont(new Font(BUTTON_SIZE));
     gameMenu[0].setOnAction(event -> {
-      timerStart();
+      System.out.printf("タイマーが開始されました。");
+      timerManager.timerStart();
     });
     // 1 → Pause
     gameMenu[1] = new Button("Pause");
     gameMenu[1].setFont(new Font(BUTTON_SIZE));
     gameMenu[1].setOnAction(event -> {
-      // TODO: ゲームをポーズ
+      timerManager.timerStop();
     });
     // 2 → Reset
     gameMenu[2] = new Button("Reset");
@@ -37,14 +40,7 @@ public class MenuManager {
     gameMenu[3] = new Button("Exit");
     gameMenu[3].setFont(new Font(BUTTON_SIZE));
     gameMenu[3].setOnAction(event -> windowFin());
-    hb.getChildren().addAll(gameMenu);
-  }
-
-  /* ボタンが押されたときの処理 */
-  /* start */
-  void timerStart() {
-    System.out.println("タイマー開始");
-    // TODO: (☆)ボタンが押されたらタイマーが開始されるようにする
+    menuRoot.getChildren().addAll(gameMenu);
   }
 
   /* Exit */
@@ -53,7 +49,7 @@ public class MenuManager {
     System.exit(0);
   }
 
-  public HBox getMenuBox() { // ゲッタ
-    return hb;
+  public HBox getMenuLine() { // ゲッタ
+    return menuRoot;
   }
 }
