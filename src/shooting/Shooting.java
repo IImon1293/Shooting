@@ -47,9 +47,7 @@ public class Shooting extends Application {
         menuManager = new MenuManager(timerManager);
         playerManager = new PlayerManager(root);
         // 表示
-        root.getChildren().addAll(playerManager.getPlayer(), menuManager.getMenuLine(), timerManager.getTimer()); // プレイヤー,
-                                                                                                                  // メニュー,
-                                                                                                                  // タイマー
+        root.getChildren().addAll(playerManager.getPlayer(), menuManager.getMenuLine(), timerManager.getTimer()); // プレイヤー,メニュー,タイマー                                                                                                  // タイマー
 
         AnchorPane.setTopAnchor(menuManager.getMenuLine(), 10.0);
         AnchorPane.setLeftAnchor(menuManager.getMenuLine(), 10.0);

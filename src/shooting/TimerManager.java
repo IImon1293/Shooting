@@ -41,7 +41,7 @@ public class TimerManager {
     timer.play();
   }
 
-  void timerStop() {
+  void timerPause() {
     timer.pause();
   }
 

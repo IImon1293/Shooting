@@ -28,7 +28,7 @@ public class MenuManager {
     gameMenu[1] = new Button("Pause");
     gameMenu[1].setFont(new Font(BUTTON_SIZE));
     gameMenu[1].setOnAction(event -> {
-      timerManager.timerStop();
+      timerManager.timerPause();
     });
     // 2 → Reset
     gameMenu[2] = new Button("Reset");
