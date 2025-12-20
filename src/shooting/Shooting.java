@@ -4,30 +4,12 @@ package shooting;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
-// レイアウト、コントロール
 import javafx.scene.layout.AnchorPane;
-// import javafx.scene.control.Label;
-// import javafx.scene.text.*;
-// import javafx.animation.Timeline; // timer
-// import javafx.event.EventHandler; // timer
-// import javafx.util.Duration; // timer
-// キーイベント
 import javafx.animation.AnimationTimer;
-// import javafx.event.ActionEvent;
-// import javafx.animation.KeyFrame;
 
 public class Shooting extends Application {
-    // // X, Y （座標）
-    // final int X = 0;
-    // final int Y = 1;
-
-    // // タイマー
-    // Label lb;
-    // final int TIMER_SIZE = 40;
-
     // コンテナ
     AnchorPane root;
-    // Timeline limitTimer;
 
     // マネージャー
     MenuManager menuManager;
@@ -47,8 +29,8 @@ public class Shooting extends Application {
         menuManager = new MenuManager(timerManager);
         playerManager = new PlayerManager(root);
         // 表示
-        root.getChildren().addAll(playerManager.getPlayer(), menuManager.getMenuLine(), timerManager.getTimer()); // プレイヤー,メニュー,タイマー                                                                                                  // タイマー
-
+        root.getChildren().addAll(playerManager.getPlayer(), menuManager.getMenuLine(), timerManager.getTimer()); // プレイヤー,メニュー,タイマー
+                                                                                                                  // //
         AnchorPane.setTopAnchor(menuManager.getMenuLine(), 10.0);
         AnchorPane.setLeftAnchor(menuManager.getMenuLine(), 10.0);
         AnchorPane.setTopAnchor(timerManager.getTimer(), 10.0); // タイマー用のLabelの位置を調整
