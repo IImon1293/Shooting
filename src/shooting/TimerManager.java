@@ -27,7 +27,7 @@ public class TimerManager {
   boolean timerStarted = false;
 
   void timerStart() {
-    System.out.println("タイマー開始");
+    System.out.printf("timer start\n");
     timerStarted = true;
     timer = new Timeline(new KeyFrame(Duration.millis(1000), new EventHandler<ActionEvent>() {
       public void handle(ActionEvent actionEvent) {
