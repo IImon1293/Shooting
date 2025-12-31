@@ -35,8 +35,9 @@ public class TimerManager {
         timerLb.setFont(new Font(TIMER_SIZE));
 
         if (Integer.parseInt(timerLb.getText()) <= 0) { // 制限時間が 0秒以下 になったら
-          timer.stop();
-          System.out.println("制限時間が終了しました。");
+          timer.pause();
+          timerLb.setText("0"); // ラベルを 0 に固定
+          System.out.println("timeup");
         }
       }
     }));
@@ -44,8 +45,15 @@ public class TimerManager {
     timer.play();
   }
 
-  void timerPause() {
-    timer.pause();
+  // TODO 作業中
+  void timerPause(boolean isPause) { // 押された回数
+    if (isPause) {
+      timer.pause(); // timerを一時停止
+      System.out.printf("Pause\n");
+    } else {
+      timer.play(); // timerを再開
+      System.out.printf("Resume\n");
+    }
   }
 
   void timerReset() {
@@ -55,7 +63,6 @@ public class TimerManager {
     timerLb.setText(String.valueOf(TIME_LIMIT));
     timerLb.setFont(new Font(TIMER_SIZE));
     timerStarted = false;
-
     System.out.printf("timer Reset\n");
   }
 

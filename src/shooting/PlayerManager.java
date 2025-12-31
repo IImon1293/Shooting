@@ -70,7 +70,7 @@ public class PlayerManager {
     } else if (playerPlace[Y] > currentSceneHeight - playerRad) { // プレイヤーが下に飛び出す→プレイヤーの座標が下限よりプレイヤーの座標が半径分上にある
       playerPlace[Y] = (int) currentSceneHeight - playerRad;
     }
-    System.out.printf("X → %d, Y → %d\n", playerPlace[X], playerPlace[Y]);
+    // System.out.printf("X → %d, Y → %d\n", playerPlace[X], playerPlace[Y]);
 
     // プレイヤー座標更新
     player.setCenterX(playerPlace[X]);

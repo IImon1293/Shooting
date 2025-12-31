@@ -10,6 +10,8 @@ public class MenuManager {
   // メニュー
   Button[] gameMenu;
   final int BUTTON_SIZE = 30;
+  // ボタンのための変数
+  boolean isPause = false;
 
   public MenuManager(TimerManager timerManager, PlayerManager playerManager) {
     // コンテナ
@@ -22,17 +24,24 @@ public class MenuManager {
     gameMenu[0].setFont(new Font(BUTTON_SIZE));
     gameMenu[0].setOnAction(event -> {
       if (timerManager.timerStarted) {
-        System.out.printf("タイマーは開始されている。\n");
+        System.out.printf("timer is already started.\n");
         return;
       }
-      System.out.printf("タイマーが開始された\n");
+      System.out.printf("timer is started.\n");
       timerManager.timerStart();
     });
     // 1 → Pause
     gameMenu[1] = new Button("Pause");
     gameMenu[1].setFont(new Font(BUTTON_SIZE));
     gameMenu[1].setOnAction(event -> {
-      timerManager.timerPause();
+      // TODO ボタンのテキストを Start / Resume に切り替える
+      if (isPause == false) {
+        isPause = true;
+      } else {
+        isPause = false;
+      }
+
+      timerManager.timerPause(isPause); // 一時停止・再開
     });
     // 2 → Reset
     gameMenu[2] = new Button("Reset");
@@ -49,7 +58,7 @@ public class MenuManager {
 
   /* Exit */
   void windowFin() {
-    System.out.println("ゲームを終了");
+    System.out.println("Exit Game");
     System.exit(0);
   }
 
