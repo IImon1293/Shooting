@@ -39,7 +39,6 @@ public class MenuManager {
     gameMenu[2].setFont(new Font(BUTTON_SIZE));
     gameMenu[2].setOnAction(event -> {
       timerManager.timerReset();
-      playerManager.isReset = true;
     });
     // 3 → Exit
     gameMenu[3] = new Button("Exit");
