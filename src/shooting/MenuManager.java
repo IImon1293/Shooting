@@ -21,7 +21,11 @@ public class MenuManager {
     gameMenu[0] = new Button("Start"); // スタート
     gameMenu[0].setFont(new Font(BUTTON_SIZE));
     gameMenu[0].setOnAction(event -> {
-      System.out.printf("タイマーが開始されました。");
+      if (timerManager.timerStarted) {
+        System.out.printf("タイマーは開始されている。\n");
+        return;
+      }
+      System.out.printf("タイマーが開始された\n");
       timerManager.timerStart();
     });
     // 1 → Pause
