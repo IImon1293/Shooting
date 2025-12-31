@@ -11,7 +11,7 @@ public class MenuManager {
   Button[] gameMenu;
   final int BUTTON_SIZE = 30;
 
-  public MenuManager(TimerManager timerManager) {
+  public MenuManager(TimerManager timerManager, PlayerManager playerManager) {
     // コンテナ
     menuRoot = new HBox();
     // メニュー
@@ -38,7 +38,8 @@ public class MenuManager {
     gameMenu[2] = new Button("Reset");
     gameMenu[2].setFont(new Font(BUTTON_SIZE));
     gameMenu[2].setOnAction(event -> {
-      // TODO: ゲームをリセット
+      timerManager.timerReset();
+      playerManager.isReset = true;
     });
     // 3 → Exit
     gameMenu[3] = new Button("Exit");

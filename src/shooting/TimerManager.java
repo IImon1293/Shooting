@@ -14,9 +14,10 @@ public class TimerManager {
   Label timerLb;
   Timeline timer;
   final int TIMER_SIZE = 40;
+  final int TIME_LIMIT = 3; // 制限時間 TODO 本番は 60 秒に直す
 
   public TimerManager() { // コンストラクタ
-    timerLb = new Label("3"); // 制限時間（60） // ! debug
+    timerLb = new Label(String.valueOf(TIME_LIMIT)); // 制限時間
     timerLb.setFont(new Font(TIMER_SIZE));
     timerRoot.getChildren().add(timerLb);
   }
@@ -45,6 +46,17 @@ public class TimerManager {
 
   void timerPause() {
     timer.pause();
+  }
+
+  void timerReset() {
+    // timeline
+    timer.stop(); // timelineを停止し、再生ヘッドを先頭に戻す
+    // label
+    timerLb.setText(String.valueOf(TIME_LIMIT));
+    timerLb.setFont(new Font(TIMER_SIZE));
+    timerStarted = false;
+
+    System.out.printf("timer Reset\n");
   }
 
   public AnchorPane getTimer() { // 部品のゲッタ

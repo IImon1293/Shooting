@@ -26,7 +26,7 @@ public class Shooting extends Application {
 
         // マネージャーの初期化
         timerManager = new TimerManager();
-        menuManager = new MenuManager(timerManager);
+        menuManager = new MenuManager(timerManager, playerManager);
         playerManager = new PlayerManager(root);
         // 表示
         root.getChildren().addAll(playerManager.getPlayer(), menuManager.getMenuLine(), timerManager.getTimer()); // プレイヤー,メニュー,タイマー

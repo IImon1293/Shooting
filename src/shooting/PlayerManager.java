@@ -20,6 +20,8 @@ public class PlayerManager {
   int playerRad = 50;
   // キー
   boolean[] keyFlag = new boolean[4]; // W, S, A, D
+  // flag
+  boolean isReset = false; // リセットされたことを検知する
 
   private AnchorPane root;
 
@@ -71,6 +73,13 @@ public class PlayerManager {
       playerPlace[Y] = (int) currentSceneHeight - playerRad;
     }
     System.out.printf("X → %d, Y → %d\n", playerPlace[X], playerPlace[Y]);
+
+    /* リセット */
+    if (isReset) {
+      playerPlace[X] = 700;
+      playerPlace[Y] = 550;
+      isReset = false;
+    }
 
     // プレイヤー座標更新
     player.setCenterX(playerPlace[X]);
