@@ -14,7 +14,7 @@ public class TimerManager {
   Label timerLb;
   Timeline timer;
   final int TIMER_SIZE = 40;
-  final int TIME_LIMIT = 60; // 制限時間 TODO 本番は 60 秒に直す
+  final int TIME_LIMIT = 3; // 制限時間 TODO 本番は 60 秒に直す
 
   public TimerManager() { // コンストラクタ
     timerLb = new Label(String.valueOf(TIME_LIMIT)); // 制限時間
