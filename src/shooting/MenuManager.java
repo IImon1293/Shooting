@@ -37,8 +37,10 @@ public class MenuManager {
       // TODO ボタンのテキストを Start / Resume に切り替える
       if (isPause == false) {
         isPause = true;
+        gameMenu[1].setText("Resume");
       } else {
         isPause = false;
+        gameMenu[1].setText("Pause");
       }
 
       timerManager.timerPause(isPause); // 一時停止・再開
