@@ -45,7 +45,6 @@ public class TimerManager {
     timer.play();
   }
 
-  // TODO 作業中
   void timerPause(boolean isPause) { // 押された回数
     if (isPause) {
       timer.pause(); // timerを一時停止

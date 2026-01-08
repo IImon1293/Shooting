@@ -34,11 +34,12 @@ public class MenuManager {
     gameMenu[1] = new Button("Pause");
     gameMenu[1].setFont(new Font(BUTTON_SIZE));
     gameMenu[1].setOnAction(event -> {
-      // TODO ボタンのテキストを Start / Resume に切り替える
       if (isPause == false) {
+        // 一時停止中
         isPause = true;
         gameMenu[1].setText("Resume");
-      } else {
+
+      } else { // isPause == true
         isPause = false;
         gameMenu[1].setText("Pause");
       }
