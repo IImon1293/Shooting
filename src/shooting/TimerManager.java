@@ -26,24 +26,26 @@ public class TimerManager {
   /* start */
   boolean timerStarted = false;
 
-  void timerStart() {
+  void timerStart(boolean isPause) {
     System.out.printf("timer start\n");
-    timerStarted = true;
-    timer = new Timeline(new KeyFrame(Duration.millis(1000), new EventHandler<ActionEvent>() {
-      public void handle(ActionEvent actionEvent) {
-        timerLb.setText(String.valueOf(Integer.parseInt(timerLb.getText()) - 1));
-        timerLb.setFont(new Font(TIMER_SIZE));
+    if (!isPause) {
+      timerStarted = true;
+      timer = new Timeline(new KeyFrame(Duration.millis(1000), new EventHandler<ActionEvent>() {
+        public void handle(ActionEvent actionEvent) {
+          timerLb.setText(String.valueOf(Integer.parseInt(timerLb.getText()) - 1));
+          timerLb.setFont(new Font(TIMER_SIZE));
 
-        if (Integer.parseInt(timerLb.getText()) <= 0) { // 制限時間が 0秒以下 になったら
-          timer.pause();
-          timerLb.setText("0"); // ラベルを 0 に固定
-          timerStarted = false; // 0秒になったら
-          System.out.println("timeup");
+          if (Integer.parseInt(timerLb.getText()) <= 0) { // 制限時間が 0秒以下 になったら
+            timer.pause();
+            timerLb.setText("0"); // ラベルを 0 に固定
+            timerStarted = false; // 0秒になったら
+            System.out.println("timeup");
+          }
         }
-      }
-    }));
-    timer.setCycleCount(Timeline.INDEFINITE);
-    timer.play();
+      }));
+      timer.setCycleCount(Timeline.INDEFINITE);
+      timer.play();
+    }
   }
 
   void timerPause(boolean isPause) { // 押された回数
