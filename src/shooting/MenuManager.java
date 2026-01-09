@@ -34,14 +34,16 @@ public class MenuManager {
     gameMenu[1] = new Button("Pause");
     gameMenu[1].setFont(new Font(BUTTON_SIZE));
     gameMenu[1].setOnAction(event -> {
-      if (isPause == false) {
-        // 一時停止中
-        isPause = true;
-        gameMenu[1].setText("Resume");
+      if (timerManager.timerStarted == true) { // タイマーが進んでいる
+        if (isPause == false) {
+          // 一時停止中
+          isPause = true;
+          gameMenu[1].setText("Resume");
 
-      } else { // isPause == true
-        isPause = false;
-        gameMenu[1].setText("Pause");
+        } else { // isPause == true
+          isPause = false;
+          gameMenu[1].setText("Pause");
+        }
       }
 
       timerManager.timerPause(isPause); // 一時停止・再開

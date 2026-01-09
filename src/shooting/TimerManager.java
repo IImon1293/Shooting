@@ -37,6 +37,7 @@ public class TimerManager {
         if (Integer.parseInt(timerLb.getText()) <= 0) { // 制限時間が 0秒以下 になったら
           timer.pause();
           timerLb.setText("0"); // ラベルを 0 に固定
+          timerStarted = false; // 0秒になったら
           System.out.println("timeup");
         }
       }
@@ -55,6 +56,8 @@ public class TimerManager {
     }
   }
 
+  // ! ポーズ中に→Startを押してリセットするとReset後に自動でタイマーが始まってしまう。
+  // TODO ポーズ中にStartを触れないようにする。
   void timerReset() {
     // timeline
     timer.stop(); // timelineを停止し、再生ヘッドを先頭に戻す
