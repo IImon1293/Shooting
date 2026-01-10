@@ -36,7 +36,7 @@ public class TimerManager {
       }
     }));
 
-    timer.setCycleCount(Timeline.INDEFINITE);
+    timer.setCycleCount(Timeline.INDEFINITE); // 繰り返し無限
   }
 
   /* ボタンが押されたときの処理 */
@@ -46,6 +46,10 @@ public class TimerManager {
   boolean isPause = false;
 
   void timerStart() {
+    if (this.timer != null) {
+      this.timer.stop(); // まだ名前（参照）があるうちに、確実に息の根を止める
+    }
+
     if (!isTimerStarted && !isPause) {
       isTimerStarted = true;
       timer.play();
