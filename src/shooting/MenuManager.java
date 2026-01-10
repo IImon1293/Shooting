@@ -10,8 +10,6 @@ public class MenuManager {
   // メニュー
   Button[] gameMenu;
   final int BUTTON_SIZE = 30;
-  // ボタンのための変数
-  boolean isPause = false;
   // 各ボタンの配列
   final int START = 0;
   final int PAUSE = 1;
@@ -28,30 +26,27 @@ public class MenuManager {
     gameMenu[START] = new Button("Start"); // スタート
     gameMenu[START].setFont(new Font(BUTTON_SIZE));
     gameMenu[START].setOnAction(event -> {
-      if (timerManager.timerStarted) { // タイマーが重複して起動しないようにする
+      // 開始させない
+      if (timerManager.timerStarted) { // タイマーが開始されている
         System.out.printf("timer is already started.\n");
         return;
       }
       System.out.printf("timer is started.\n");
-      timerManager.timerStart(isPause); // timerを開始する。
+      timerManager.timerStart(); // timerを開始する。
     });
     // 1 → Pause
     gameMenu[PAUSE] = new Button("Pause");
     gameMenu[PAUSE].setFont(new Font(BUTTON_SIZE));
     gameMenu[PAUSE].setOnAction(event -> {
-      if (isPause == false) {
+      if (timerManager.isPause == false) {
         // 一時停止中
-        isPause = true;
+        timerManager.isPause = true;
         gameMenu[PAUSE].setText("Resume");
-      } else if (isPause == true || Integer.parseInt(timerManager.timerLb.getText()) <= 0) { // 制限時間が終了したら戻す
-        isPause = false;
-        gameMenu[PAUSE].setText("Pause");
       } else {
-        isPause = false;
+        timerManager.isPause = false;
         gameMenu[PAUSE].setText("Pause");
       }
-
-      timerManager.timerPause(isPause); // 一時停止・再開
+      timerManager.timerPause(); // 一時停止・再開
     });
     // 2 → Reset
     gameMenu[RESET] = new Button("Reset");

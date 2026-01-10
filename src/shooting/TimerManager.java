@@ -14,7 +14,7 @@ public class TimerManager {
   Label timerLb;
   Timeline timer;
   final int TIMER_SIZE = 40;
-  final int TIME_LIMIT = 3; // 制限時間 // ! 本番は 60 秒に直す
+  final int TIME_LIMIT = 60; // 制限時間 // ! 本番は 60 秒に直す
 
   public TimerManager() { // コンストラクタ
     timerLb = new Label(String.valueOf(TIME_LIMIT)); // 制限時間
@@ -25,9 +25,11 @@ public class TimerManager {
   /* ボタンが押されたときの処理 */
   /* start */
   boolean timerStarted = false;
+  /* pause */
+  boolean isPause = false;
 
-  void timerStart(boolean isPause) {
-    System.out.printf("timer start\n");
+  void timerStart() {
+    // System.out.printf("timer start\n");
     if (!isPause) {
       timerStarted = true;
       timer = new Timeline(new KeyFrame(Duration.millis(1000), new EventHandler<ActionEvent>() {
@@ -48,7 +50,7 @@ public class TimerManager {
     }
   }
 
-  void timerPause(boolean isPause) { // 押された回数
+  void timerPause() { // 押された回数
     if (isPause) {
       timer.pause(); // timerを一時停止
       System.out.printf("Pause\n");
@@ -61,13 +63,22 @@ public class TimerManager {
   // ! ポーズ中に→Startを押してリセットするとReset後に自動でタイマーが始まってしまう。
   // TODO ポーズ中にStartを触れないようにする。
   void timerReset() {
+    // 一時停止中に再開されたら
+    if (isPause == true) {
+      isPause = false; // 一時停止を解除
+      timer.play(); // 一時的に再開させる
+    }
+
+    timerStarted = false;
+    isPause = false; // ポーズ状態を解除
+    System.out.printf("timer Reset\n");
+
     // timeline
     timer.stop(); // timelineを停止し、再生ヘッドを先頭に戻す
     // label
     timerLb.setText(String.valueOf(TIME_LIMIT));
     timerLb.setFont(new Font(TIMER_SIZE));
-    timerStarted = false;
-    System.out.printf("timer Reset\n");
+
   }
 
   public AnchorPane getTimer() { // 部品のゲッタ
