@@ -1,5 +1,7 @@
 package shooting;
 
+// TODO ResetしてもPauseの挙動が治らないことを直す
+
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
@@ -20,6 +22,19 @@ public class TimerManager {
     timerLb = new Label(String.valueOf(TIME_LIMIT)); // 制限時間
     timerLb.setFont(new Font(TIMER_SIZE));
     timerRoot.getChildren().add(timerLb);
+
+    timer = new Timeline(new KeyFrame(Duration.millis(1000), new EventHandler<ActionEvent>() {
+      public void handle(ActionEvent actionEvent) {
+        timerLb.setText(String.valueOf(Integer.parseInt(timerLb.getText()) - 1));
+        timerLb.setFont(new Font(TIMER_SIZE));
+
+        if (Integer.parseInt(timerLb.getText()) <= 0) { // 制限時間が 0秒以下 になったら
+          timer.pause();
+          timerLb.setText("0"); // ラベルを 0 に固定
+          timerStarted = false; // 0秒になったら
+        }
+      }
+    }));
   }
 
   /* ボタンが押されたときの処理 */
@@ -29,22 +44,29 @@ public class TimerManager {
   boolean isPause = false;
 
   void timerStart() {
-    // System.out.printf("timer start\n");
+    // 直前に生成されたタイマーがある場合
+    if (this.timer != null) {
+      this.timer.stop();
+    }
+
     if (!isPause) {
       timerStarted = true;
-      timer = new Timeline(new KeyFrame(Duration.millis(1000), new EventHandler<ActionEvent>() {
-        public void handle(ActionEvent actionEvent) {
-          timerLb.setText(String.valueOf(Integer.parseInt(timerLb.getText()) - 1));
-          timerLb.setFont(new Font(TIMER_SIZE));
+      // https://teratail.com/questions/227535
+      // ! timerを毎回新しくnewしないようにする
+      // timer = new Timeline(new KeyFrame(Duration.millis(1000), new
+      // EventHandler<ActionEvent>() {
+      // public void handle(ActionEvent actionEvent) {
+      // timerLb.setText(String.valueOf(Integer.parseInt(timerLb.getText()) - 1));
+      // timerLb.setFont(new Font(TIMER_SIZE));
 
-          if (Integer.parseInt(timerLb.getText()) <= 0) { // 制限時間が 0秒以下 になったら
-            timer.pause();
-            timerLb.setText("0"); // ラベルを 0 に固定
-            timerStarted = false; // 0秒になったら
-            System.out.println("timeup");
-          }
-        }
-      }));
+      // if (Integer.parseInt(timerLb.getText()) <= 0) { // 制限時間が 0秒以下 になったら
+      // timer.pause();
+      // timerLb.setText("0"); // ラベルを 0 に固定
+      // timerStarted = false; // 0秒になったら
+      // System.out.println("timeup");
+      // }
+      // }
+      // }));
       timer.setCycleCount(Timeline.INDEFINITE);
       timer.play();
     }
@@ -63,15 +85,6 @@ public class TimerManager {
   // ! ポーズ中に→Startを押してリセットするとReset後に自動でタイマーが始まってしまう。
   // TODO ポーズ中にStartを触れないようにする。
   void timerReset() {
-    // 一時停止中に再開されたら
-    if (isPause == true) {
-      isPause = false; // 一時停止を解除
-      timer.play(); // 一時的に再開させる
-    }
-
-    timerStarted = false;
-    isPause = false; // ポーズ状態を解除
-    System.out.printf("timer Reset\n");
 
     // timeline
     timer.stop(); // timelineを停止し、再生ヘッドを先頭に戻す

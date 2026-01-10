@@ -1,3 +1,7 @@
+// getKeyFrames
+// public final ObservableList<KeyFrame> getKeyFrames()
+// このTimelineのKeyFramesを返します。
+
 // package shooting;
 
 // // root
