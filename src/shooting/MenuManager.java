@@ -28,11 +28,8 @@ public class MenuManager {
     gameMenu[START].setOnAction(event -> {
       // 開始させない
       if (timerManager.isTimerStarted && timerManager.isPause == true) { // タイマーが開始されている
-        // ? StartでもPause状態を解除できるようにするかも？
-        System.out.printf("timer is already started.\n");
         return;
       } else {
-        System.out.printf("timer is started.\n");
         timerManager.timerStart(); // timerを開始する。
       }
     });
