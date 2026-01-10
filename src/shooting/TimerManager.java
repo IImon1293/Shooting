@@ -1,7 +1,5 @@
 package shooting;
 
-// TODO ResetしてもPauseの挙動が治らないことを直す
-
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
@@ -46,10 +44,6 @@ public class TimerManager {
   boolean isPause = false;
 
   void timerStart() {
-    if (this.timer != null) {
-      this.timer.stop(); // まだ名前（参照）があるうちに、確実に息の根を止める
-    }
-
     if (!isTimerStarted && !isPause) {
       isTimerStarted = true;
       timer.play();
@@ -57,10 +51,12 @@ public class TimerManager {
   }
 
   void timerPause() { // 押された回数
-    if (!isPause) {
+    if (!isTimerStarted) { // タイマーが開始されていないとき
+      return; // 無効
+    } else if (isTimerStarted && !isPause) { // タイマーが開始されていて、一時停止されていないとき
       isPause = true;
       timer.pause(); // timerを一時停止
-    } else {
+    } else { // タイマーが開始されていて、一時停止中のとき
       isPause = false;
       timer.play(); // timerを再開
     }

@@ -33,13 +33,17 @@ public class MenuManager {
         timerManager.timerStart(); // timerを開始する。
       }
     });
+
+    // TODO Pause -> Resumeでtimelineが開始される問題を確認
     // 1 → Pause
     gameMenu[PAUSE] = new Button("Pause");
     gameMenu[PAUSE].setFont(new Font(BUTTON_SIZE));
     gameMenu[PAUSE].setOnAction(event -> {
-      if (timerManager.isPause == false) {
+      if (!timerManager.isTimerStarted) { // タイマーが開始されていないとき
+        return;
+      } else if (timerManager.isPause == false) { // タイマーが開始されていて、一時停止されていない
         gameMenu[PAUSE].setText("Resume");
-      } else {
+      } else { // タイマーが開始されていて、一時停止中
         gameMenu[PAUSE].setText("Pause");
       }
       timerManager.timerPause(); // 一時停止・再開
