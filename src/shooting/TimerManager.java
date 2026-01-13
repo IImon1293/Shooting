@@ -78,4 +78,8 @@ public class TimerManager {
   public AnchorPane getTimer() { // 部品のゲッタ
     return timerRoot;
   }
+
+  public Timeline getTimerTimeline() { // EnemyManagerとTimeLineを共通化させる
+    return timer;
+  }
 }
