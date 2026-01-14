@@ -16,17 +16,17 @@ import java.util.Random;
 import javax.swing.Action;
 
 public class EnemyManager {
-  Pane enemyRoot = new Pane();
+  private Pane enemyRoot = new Pane();
 
-  Rectangle[] enemy;
-  final double ENEMYSIZE = 20.0;
-  int[][] enemyPlace;
-  final int X = 0;
-  final int Y = 1;
+  private Rectangle[] enemy = new Rectangle[100];
+  private final double ENEMYSIZE = 20.0;
+  private int[][] enemyPlace = new int[2][100];
+  private final int X = 0;
+  private final int Y = 1;
 
-  final int SPAWN_ENENY_VALUE = 5; // enemySpawn()で呼び出される敵の数
+  private final int SPAWN_ENENY_VALUE = 5; // enemySpawn()で呼び出される敵の数
 
-  int nowEnemy = 0; // nowEnemy番までの敵が発生した
+  private int nowEnemy = 0; // nowEnemy番までの敵が発生した
 
   public EnemyManager(TimerManager timerManager, MenuManager manuManager) {
     Timeline timeline = timerManager.getTimerTimeline();
@@ -47,7 +47,7 @@ public class EnemyManager {
     double currentSceneWidth = enemyRoot.getWidth();
     double currentSceneHeight = enemyRoot.getHeight();
 
-    for (int i = nowEnemy; i < nowEnemy + 5; i++) { // ? nowEnemuの数をforの中で変えるとiの値も変わる？
+    for (int i = nowEnemy; i < nowEnemy + SPAWN_ENENY_VALUE; i++) { // ? nowEnemuの数をforの中で変えるとiの値も変わる？
       enemyPlace[X][i] = random.nextInt((int) currentSceneWidth - (int) ENEMYSIZE) + (int) ENEMYSIZE;
       enemyPlace[Y][i] = random.nextInt((int) currentSceneHeight - (int) ENEMYSIZE) + (int) ENEMYSIZE;
 

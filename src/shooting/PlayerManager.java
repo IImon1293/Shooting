@@ -6,13 +6,13 @@ import javafx.scene.layout.AnchorPane;
 
 public class PlayerManager {
   // X, Y （座標）
-  final int X = 0;
-  final int Y = 1;
+  private final int X = 0;
+  private final int Y = 1;
   // WASD
-  final int W = 0;
-  final int S = 1;
-  final int A = 2;
-  final int D = 3;
+  private final int W = 0;
+  private final int S = 1;
+  private final int A = 2;
+  private final int D = 3;
 
   // プレイヤー
   Circle player;
