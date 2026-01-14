@@ -48,14 +48,14 @@ public class TimerManager {
   /* pause */
   private boolean isPause = false;
 
-  void timerStart() {
+  public void timerStart() {
     if (!isTimerStarted && !isPause) {
       isTimerStarted = true;
       timer.play();
     }
   }
 
-  void timerPause() { // 押された回数
+  public void timerPause() { // 押された回数
     if (!isTimerStarted) { // タイマーが開始されていないとき
       return; // 無効
     } else if (isTimerStarted && !isPause) { // タイマーが開始されていて、一時停止されていないとき
@@ -69,7 +69,7 @@ public class TimerManager {
 
   // FIXED ポーズ中に→Startを押してリセットするとReset後に自動でタイマーが始まってしまう。
   // TimeLineがStartを押す都度開始されず、コンストラクタで起動時に開始されるようにした。
-  void timerReset() {
+  public void timerReset() {
     isTimerStarted = false;
     isPause = false;
 

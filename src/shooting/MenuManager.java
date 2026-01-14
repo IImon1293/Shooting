@@ -62,7 +62,7 @@ public class MenuManager {
   }
 
   /* Exit */
-  void windowFin() {
+  public void windowFin() {
     System.out.println("Exit Game");
     System.exit(0);
   }
