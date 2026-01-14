@@ -9,6 +9,9 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Font;
 import javafx.util.Duration;
 
+// https://docs.oracle.com/javase/jp/8/javafx/api/javafx/animation/Animation.html#getStatus--
+// TODO TimeLineのGetStatusでフラグを管理するようにする
+
 public class TimerManager {
   AnchorPane timerRoot = new AnchorPane();
   Label timerLb;

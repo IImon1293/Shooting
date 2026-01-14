@@ -6,6 +6,7 @@ import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.animation.AnimationTimer;
+import java.util.Random;
 
 public class Shooting extends Application {
     // コンテナ
@@ -28,6 +29,10 @@ public class Shooting extends Application {
         timerManager = new TimerManager();
         playerManager = new PlayerManager(root);
         menuManager = new MenuManager(timerManager, playerManager);
+        EnemyManager enemyManager = new EnemyManager(timerManager, menuManager);
+
+        // 画面に敵のルートPaneを追加
+        root.getChildren().add(enemyManager.getEnemyRoot());
         // 表示
         root.getChildren().addAll(playerManager.getPlayer(), menuManager.getMenuLine(), timerManager.getTimer()); // プレイヤー,メニュー,タイマー
                                                                                                                   // //

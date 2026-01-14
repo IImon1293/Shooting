@@ -35,6 +35,7 @@ public class PlayerManager {
     return player;
   }
 
+  // プレイヤーは常に動くことができる。
   public void gameLoop() {
     /* 移動 */
     // WASD 参考 : https://nompor.com/2018/01/18/post-2761/
