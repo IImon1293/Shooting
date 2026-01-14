@@ -5,9 +5,6 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 
 public class PlayerManager {
-  // X, Y （座標）
-  private final int X = 0;
-  private final int Y = 1;
   // WASD
   private final int W = 0;
   private final int S = 1;
@@ -15,20 +12,25 @@ public class PlayerManager {
   private final int D = 3;
 
   // プレイヤー
-  Circle player;
-  int[] playerPlace = new int[2]; // 0 → X, 1 → Y
-  int playerRad = 50;
+  private Circle player;
+  private int playerRad = 50;
+  private int playerPlace_X;
+  private int playerPlace_Y;
+  // 移動速度
+  private final int MOVESPEED_X = 15;
+  private final int MOVESPEED_Y = 15;
+
   // キー
-  boolean[] keyFlag = new boolean[4]; // W, S, A, D
+  private boolean[] keyFlag = new boolean[4]; // W, S, A, D
 
   private AnchorPane root;
 
   public PlayerManager(AnchorPane root) {
     this.root = root;
     // プレイヤー初期化
-    playerPlace[X] = 700;
-    playerPlace[Y] = 550;
-    player = new Circle(playerPlace[X], playerPlace[Y], playerRad); // X, Y, 半径
+    playerPlace_X = 700;
+    playerPlace_Y = 550;
+    player = new Circle(playerPlace_X, playerPlace_Y, playerRad); // X, Y, 半径
   }
 
   public Circle getPlayer() {
@@ -43,39 +45,35 @@ public class PlayerManager {
     double currentSceneWidth = root.getWidth();
     double currentSceneHeight = root.getHeight();
 
-    final int[] moveSpeed = new int[2];
-    moveSpeed[X] = 15;
-    moveSpeed[Y] = 15;
-
     if (keyFlag[W]) { // 上
-      playerPlace[Y] -= moveSpeed[Y];
+      playerPlace_Y -= MOVESPEED_Y;
     }
     if (keyFlag[S]) { // 下
-      playerPlace[Y] += moveSpeed[Y];
+      playerPlace_Y += MOVESPEED_Y;
     }
     if (keyFlag[A]) {
-      playerPlace[X] -= moveSpeed[X];
+      playerPlace_X -= MOVESPEED_X;
     }
     if (keyFlag[D]) {
-      playerPlace[X] += moveSpeed[X];
+      playerPlace_X += MOVESPEED_X;
     }
 
-    if (playerPlace[X] < playerRad) { // プレイヤーが上に飛び出す→プレイヤーの座標が上限より半径分下にある
-      playerPlace[X] = playerRad;
-    } else if (playerPlace[X] > currentSceneWidth - playerRad) { // プレイヤーが下に飛び出す→プレイヤーの座標が下限よりプレイヤーの座標が半径分上にある
-      playerPlace[X] = (int) currentSceneWidth - playerRad;
+    if (playerPlace_X < playerRad) { // プレイヤーが上に飛び出す→プレイヤーの座標が上限より半径分下にある
+      playerPlace_X = playerRad;
+    } else if (playerPlace_X > currentSceneWidth - playerRad) { // プレイヤーが下に飛び出す→プレイヤーの座標が下限よりプレイヤーの座標が半径分上にある
+      playerPlace_X = (int) currentSceneWidth - playerRad;
     }
 
-    if (playerPlace[Y] < playerRad) { // プレイヤーが上に飛び出す→プレイヤーの座標が上限より半径分下にある
-      playerPlace[Y] = playerRad;
-    } else if (playerPlace[Y] > currentSceneHeight - playerRad) { // プレイヤーが下に飛び出す→プレイヤーの座標が下限よりプレイヤーの座標が半径分上にある
-      playerPlace[Y] = (int) currentSceneHeight - playerRad;
+    if (playerPlace_Y < playerRad) { // プレイヤーが上に飛び出す→プレイヤーの座標が上限より半径分下にある
+      playerPlace_Y = playerRad;
+    } else if (playerPlace_Y > currentSceneHeight - playerRad) { // プレイヤーが下に飛び出す→プレイヤーの座標が下限よりプレイヤーの座標が半径分上にある
+      playerPlace_Y = (int) currentSceneHeight - playerRad;
     }
-    // System.out.printf("X → %d, Y → %d\n", playerPlace[X], playerPlace[Y]);
+    // System.out.printf("X → %d, Y → %d\n", playerPlace_X, playerPlace_Y);
 
     // プレイヤー座標更新
-    player.setCenterX(playerPlace[X]);
-    player.setCenterY(playerPlace[Y]);
+    player.setCenterX(playerPlace_X);
+    player.setCenterY(playerPlace_Y);
   }
 
   public void doKeyAction(KeyEvent event) {

@@ -5,17 +5,16 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
-import javafx.animation.AnimationTimer;
-import java.util.Random;
+import javafx.animation.AnimationTimer;;
 
 public class Shooting extends Application {
     // コンテナ
-    AnchorPane root;
+    private AnchorPane root;
 
     // マネージャー
-    MenuManager menuManager;
-    PlayerManager playerManager;
-    TimerManager timerManager;
+    private MenuManager menuManager;
+    private PlayerManager playerManager;
+    private TimerManager timerManager;
 
     @Override
     public void start(Stage stage) throws Exception { // 例外処理
@@ -29,10 +28,7 @@ public class Shooting extends Application {
         timerManager = new TimerManager();
         playerManager = new PlayerManager(root);
         menuManager = new MenuManager(timerManager, playerManager);
-        EnemyManager enemyManager = new EnemyManager(timerManager, menuManager);
 
-        // 画面に敵のルートPaneを追加
-        root.getChildren().add(enemyManager.getEnemyRoot());
         // 表示
         root.getChildren().addAll(playerManager.getPlayer(), menuManager.getMenuLine(), timerManager.getTimer()); // プレイヤー,メニュー,タイマー
                                                                                                                   // //

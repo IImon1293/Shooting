@@ -6,15 +6,15 @@ import javafx.scene.text.Font;
 
 public class MenuManager {
   // コンテナ
-  HBox menuRoot;
+  private HBox menuRoot;
   // メニュー
-  Button[] gameMenu;
-  final int BUTTON_SIZE = 30;
+  private Button[] gameMenu;
+  private final int BUTTON_SIZE = 30;
   // 各ボタンの配列
-  final static int START = 0;
-  final static int PAUSE = 1;
-  final static int RESET = 2;
-  final static int EXIT = 3;
+  private final static int START = 0;
+  private final static int PAUSE = 1;
+  private final static int RESET = 2;
+  private final static int EXIT = 3;
 
   public MenuManager(TimerManager timerManager, PlayerManager playerManager) {
     // コンテナ
@@ -27,21 +27,20 @@ public class MenuManager {
     gameMenu[START].setFont(new Font(BUTTON_SIZE));
     gameMenu[START].setOnAction(event -> {
       // 開始させない
-      if (timerManager.isTimerStarted && timerManager.isPause == true) { // タイマーが開始されている
+      if (timerManager.getIsTimerStarted() && timerManager.getIsPause()) { // タイマーが開始されている
         return;
       } else {
         timerManager.timerStart(); // timerを開始する。
       }
     });
 
-    // TODO Pause -> Resumeでtimelineが開始される問題を確認
     // 1 → Pause
     gameMenu[PAUSE] = new Button("Pause");
     gameMenu[PAUSE].setFont(new Font(BUTTON_SIZE));
     gameMenu[PAUSE].setOnAction(event -> {
-      if (!timerManager.isTimerStarted) { // タイマーが開始されていないとき
+      if (!timerManager.getIsTimerStarted()) { // タイマーが開始されていないとき
         return;
-      } else if (timerManager.isPause == false) { // タイマーが開始されていて、一時停止されていない
+      } else if (!timerManager.getIsPause()) { // タイマーが開始されていて、一時停止されていない
         gameMenu[PAUSE].setText("Resume");
       } else { // タイマーが開始されていて、一時停止中
         gameMenu[PAUSE].setText("Pause");

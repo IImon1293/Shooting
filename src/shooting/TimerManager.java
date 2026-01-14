@@ -9,15 +9,15 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Font;
 import javafx.util.Duration;
 
-// https://docs.oracle.com/javase/jp/8/javafx/api/javafx/animation/Animation.html#getStatus--
-// TODO TimeLineのGetStatusでフラグを管理するようにする
+// ? https://docs.oracle.com/javase/jp/8/javafx/api/javafx/animation/Animation.html#getStatus--
 
 public class TimerManager {
-  AnchorPane timerRoot = new AnchorPane();
-  Label timerLb;
-  Timeline timer;
-  final int TIMER_SIZE = 40; // 文字のサイズ
-  final int TIME_LIMIT = 60; // 制限時間
+  private AnchorPane timerRoot = new AnchorPane();
+  private Label timerLb;
+  private Timeline timer;
+  private final int TIMER_SIZE = 40; // 文字のサイズ
+  private final int TIME_LIMIT = 60; // 制限時間
+  private int nowTime = TIME_LIMIT; // 現在の時間
 
   public TimerManager() { // コンストラクタ
     timerLb = new Label(String.valueOf(TIME_LIMIT)); // 制限時間
@@ -25,11 +25,13 @@ public class TimerManager {
     timerRoot.getChildren().add(timerLb);
 
     timer = new Timeline(new KeyFrame(Duration.millis(1000), new EventHandler<ActionEvent>() {
+      // https://docs.oracle.com/javase/jp/8/javafx/api/javafx/event/EventHandler.html
+      // EventHandlerのインターフェース
       public void handle(ActionEvent actionEvent) {
-        timerLb.setText(String.valueOf(Integer.parseInt(timerLb.getText()) - 1));
-        timerLb.setFont(new Font(TIMER_SIZE));
+        nowTime -= 1;
+        timerLb.setText(String.valueOf(nowTime));
 
-        if (Integer.parseInt(timerLb.getText()) <= 0) { // 制限時間が 0秒以下 になったら
+        if (nowTime <= 0) { // 制限時間が 0秒以下 になったら
           timer.pause();
           timerLb.setText("0"); // ラベルを 0 に固定
           isTimerStarted = false; // 0秒になったら
@@ -42,9 +44,9 @@ public class TimerManager {
 
   /* ボタンが押されたときの処理 */
   /* start */
-  boolean isTimerStarted = false;
+  private boolean isTimerStarted = false;
   /* pause */
-  boolean isPause = false;
+  private boolean isPause = false;
 
   void timerStart() {
     if (!isTimerStarted && !isPause) {
@@ -73,9 +75,19 @@ public class TimerManager {
 
     // timeline
     timer.stop(); // timelineを停止し、再生ヘッドを先頭に戻す
+    // 秒数をリセット
+    nowTime = TIME_LIMIT;
     // label
-    timerLb.setText(String.valueOf(TIME_LIMIT));
+    timerLb.setText(String.valueOf(nowTime));
     timerLb.setFont(new Font(TIMER_SIZE));
+  }
+
+  public boolean getIsTimerStarted() {
+    return isTimerStarted;
+  }
+
+  public boolean getIsPause() {
+    return isPause;
   }
 
   public AnchorPane getTimer() { // 部品のゲッタ
