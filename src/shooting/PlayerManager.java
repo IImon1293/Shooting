@@ -14,8 +14,10 @@ public class PlayerManager {
   // プレイヤー
   private Circle player;
   private int playerRad = 50;
-  private int playerPlace_X;
-  private int playerPlace_Y;
+  private final double SPAWNPLACE_X = 700.0;
+  private final double SPAWNPLACE_Y = 550.0;
+  private double playerPlace_X;
+  private double playerPlace_Y;
   // 移動速度
   private final int MOVESPEED_X = 15;
   private final int MOVESPEED_Y = 15;
@@ -28,8 +30,8 @@ public class PlayerManager {
   public PlayerManager(AnchorPane root) {
     this.root = root;
     // プレイヤー初期化
-    playerPlace_X = 700;
-    playerPlace_Y = 550;
+    playerPlace_X = SPAWNPLACE_X;
+    playerPlace_Y = SPAWNPLACE_Y;
     player = new Circle(playerPlace_X, playerPlace_Y, playerRad); // X, Y, 半径
   }
 
@@ -61,15 +63,14 @@ public class PlayerManager {
     if (playerPlace_X < playerRad) { // プレイヤーが上に飛び出す→プレイヤーの座標が上限より半径分下にある
       playerPlace_X = playerRad;
     } else if (playerPlace_X > currentSceneWidth - playerRad) { // プレイヤーが下に飛び出す→プレイヤーの座標が下限よりプレイヤーの座標が半径分上にある
-      playerPlace_X = (int) currentSceneWidth - playerRad;
+      playerPlace_X = currentSceneWidth - playerRad;
     }
 
     if (playerPlace_Y < playerRad) { // プレイヤーが上に飛び出す→プレイヤーの座標が上限より半径分下にある
       playerPlace_Y = playerRad;
     } else if (playerPlace_Y > currentSceneHeight - playerRad) { // プレイヤーが下に飛び出す→プレイヤーの座標が下限よりプレイヤーの座標が半径分上にある
-      playerPlace_Y = (int) currentSceneHeight - playerRad;
+      playerPlace_Y = currentSceneHeight - playerRad;
     }
-    // System.out.printf("X → %d, Y → %d\n", playerPlace_X, playerPlace_Y);
 
     // プレイヤー座標更新
     player.setCenterX(playerPlace_X);
