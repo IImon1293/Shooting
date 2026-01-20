@@ -15,6 +15,7 @@ public class Shooting extends Application {
     private MenuManager menuManager;
     private PlayerManager playerManager;
     private TimerManager timerManager;
+    private EnemyManager enemyManager;
 
     @Override
     public void start(Stage stage) throws Exception { // 例外処理
