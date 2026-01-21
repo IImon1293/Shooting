@@ -13,7 +13,7 @@ public class PlayerManager {
 
   // プレイヤー
   private Circle player;
-  private int playerRad = 50;
+  private final int PLAYER_RAD = 50;
   private final double SPAWNPLACE_X = 700.0;
   private final double SPAWNPLACE_Y = 550.0;
   private double playerPlace_X;
@@ -32,7 +32,7 @@ public class PlayerManager {
     // プレイヤー初期化
     playerPlace_X = SPAWNPLACE_X;
     playerPlace_Y = SPAWNPLACE_Y;
-    player = new Circle(playerPlace_X, playerPlace_Y, playerRad); // X, Y, 半径
+    player = new Circle(playerPlace_X, playerPlace_Y, PLAYER_RAD); // X, Y, 半径
   }
 
   public Circle getPlayer() {
@@ -60,16 +60,16 @@ public class PlayerManager {
       playerPlace_X += MOVESPEED_X;
     }
 
-    if (playerPlace_X < playerRad) { // プレイヤーが上に飛び出す→プレイヤーの座標が上限より半径分下にある
-      playerPlace_X = playerRad;
-    } else if (playerPlace_X > currentSceneWidth - playerRad) { // プレイヤーが下に飛び出す→プレイヤーの座標が下限よりプレイヤーの座標が半径分上にある
-      playerPlace_X = currentSceneWidth - playerRad;
+    if (playerPlace_X < PLAYER_RAD) { // プレイヤーが上に飛び出す→プレイヤーの座標が上限より半径分下にある
+      playerPlace_X = PLAYER_RAD;
+    } else if (playerPlace_X > currentSceneWidth - PLAYER_RAD) { // プレイヤーが下に飛び出す→プレイヤーの座標が下限よりプレイヤーの座標が半径分上にある
+      playerPlace_X = currentSceneWidth - PLAYER_RAD;
     }
 
-    if (playerPlace_Y < playerRad) { // プレイヤーが上に飛び出す→プレイヤーの座標が上限より半径分下にある
-      playerPlace_Y = playerRad;
-    } else if (playerPlace_Y > currentSceneHeight - playerRad) { // プレイヤーが下に飛び出す→プレイヤーの座標が下限よりプレイヤーの座標が半径分上にある
-      playerPlace_Y = currentSceneHeight - playerRad;
+    if (playerPlace_Y < PLAYER_RAD) { // プレイヤーが上に飛び出す→プレイヤーの座標が上限より半径分下にある
+      playerPlace_Y = PLAYER_RAD;
+    } else if (playerPlace_Y > currentSceneHeight - PLAYER_RAD) { // プレイヤーが下に飛び出す→プレイヤーの座標が下限よりプレイヤーの座標が半径分上にある
+      playerPlace_Y = currentSceneHeight - PLAYER_RAD;
     }
 
     // プレイヤー座標更新
@@ -114,6 +114,11 @@ public class PlayerManager {
       default:
         break;
     }
+  }
+
+  // プレイヤーの大きさを渡す
+  public double getPlayerRad() {
+    return (double) PLAYER_RAD;
   }
 
   // 画面の大きさを取得する
