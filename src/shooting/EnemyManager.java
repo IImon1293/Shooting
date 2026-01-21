@@ -17,15 +17,15 @@ public class EnemyManager {
   private ArrayList<Rectangle> enemyList;
   private PlayerManager playerManager;
 
+  // 間隔
   private final int SPAWN_INTERVAL = 2000;
-  private final int SPAWN_NUM = 15;
+  private final int SPAWN_NUM = 10;
 
   // サイズを1.5倍 (45.0)
   private final double ENEMY_SIZE = 45.0;
 
-  // --- 速度の設定 ---
+  // 速度
   private final double MIN_SPEED = 2.0;
-  // 最大速度を 7.0 * 0.7 = 4.9 に変更
   private final double MAX_SPEED = 4.9;
 
   public EnemyManager(AnchorPane root, PlayerManager playerManager, TimerManager timerManager) {
@@ -70,10 +70,10 @@ public class EnemyManager {
       // 各敵が持つ個別の速度を取得
       double speed = (double) e.getUserData();
 
-      // 1. 移動処理 (落下)
+      // 移動
       e.setY(e.getY() + speed);
 
-      // 2. 当たり判定処理 (PlayerとぶつかったらEnemyを消す)
+      // 当たり判定
       Shape intersect = Shape.intersect(playerManager.getPlayer(), e);
       if (intersect.getBoundsInLocal().getWidth() > 0) {
         removeEnemy(e, i);
@@ -81,7 +81,7 @@ public class EnemyManager {
         continue;
       }
 
-      // 3. 画面外判定
+      // 画面外判定
       if (e.getY() > root.getHeight()) {
         removeEnemy(e, i);
         i--;

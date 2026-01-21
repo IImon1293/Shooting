@@ -16,7 +16,7 @@ public class TimerManager {
   private Label timerLb;
   private Timeline timer;
   private final int TIMER_SIZE = 40; // 文字のサイズ
-  private final int TIME_LIMIT = 60; // 制限時間
+  private final int TIME_LIMIT = 30; // 制限時間
   private int nowTime = TIME_LIMIT; // 現在の時間
 
   public TimerManager() { // コンストラクタ

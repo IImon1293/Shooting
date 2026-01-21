@@ -55,12 +55,9 @@ public class Shooting extends Application {
         new AnimationTimer() {
             @Override
             public void handle(long now) {
+                playerManager.gameLoop();
                 // タイマーが開始されており、かつ一時停止中でない場合のみゲームを進行させる
                 if (timerManager.getIsTimerStarted() && !timerManager.getIsPause()) {
-                    // プレイヤーの移動処理
-                    playerManager.gameLoop();
-
-                    // 敵の移動・管理処理（修正後のEnemyManagerに実装したメソッド）
                     enemyManager.updateEnemies();
                 }
             }
