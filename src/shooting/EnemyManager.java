@@ -21,8 +21,8 @@ public class EnemyManager {
   private final int SPAWN_INTERVAL = 2000;
   private final int SPAWN_NUM = 10;
 
-  // サイズを1.5倍 (45.0)
-  private final double ENEMY_SIZE = 45.0;
+  // 敵の大きさ
+  private final double ENEMY_SIZE = 70;
 
   // 速度
   private final double MIN_SPEED = 2.0;
@@ -52,7 +52,7 @@ public class EnemyManager {
       double spawnY = -ENEMY_SIZE;
 
       Rectangle newEnemy = new Rectangle(spawnX, spawnY, ENEMY_SIZE, ENEMY_SIZE);
-      newEnemy.setFill(Color.RED);
+      newEnemy.setFill(Color.BLACK);
 
       // スピード設定
       double randomSpeed = MIN_SPEED + (MAX_SPEED - MIN_SPEED) * rd.nextDouble();
