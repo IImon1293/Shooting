@@ -115,4 +115,13 @@ public class PlayerManager {
         break;
     }
   }
+
+  // 画面の大きさを取得する
+  public double getWindowSize_X() {
+    return root.getWidth();
+  }
+
+  public double getWindowSize_Y() {
+    return root.getHeight();
+  }
 }
