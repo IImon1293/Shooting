@@ -13,14 +13,14 @@ public class PlayerManager {
 
   // プレイヤー
   private Circle player;
-  private final int PLAYER_RAD = 50;
+  private final int PLAYER_RAD = 90;
   private final double SPAWNPLACE_X = 700.0;
   private final double SPAWNPLACE_Y = 550.0;
   private double playerPlace_X;
   private double playerPlace_Y;
   // 移動速度
-  private final int MOVESPEED_X = 15;
-  private final int MOVESPEED_Y = 15;
+  private final int MOVESPEED_X = 30;
+  private final int MOVESPEED_Y = 30;
 
   // キー
   private boolean[] keyFlag = new boolean[4]; // W, S, A, D

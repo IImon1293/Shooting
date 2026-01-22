@@ -17,8 +17,8 @@ public class EnemyManager {
   private ArrayList<Rectangle> enemyList;
   private PlayerManager playerManager;
 
-  private final int SPAWN_INTERVAL = 2000;
-  private final int SPAWN_NUM = 10;
+  private final int SPAWN_INTERVAL = 3000;
+  private final int SPAWN_NUM = 15;
   private final double ENEMY_SIZE = 70;
   private final double MIN_SPEED = 2.0;
   private final double MAX_SPEED = 4.9;
