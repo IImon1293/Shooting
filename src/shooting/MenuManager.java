@@ -16,7 +16,7 @@ public class MenuManager {
   private final static int RESET = 2;
   private final static int EXIT = 3;
 
-  public MenuManager(TimerManager timerManager, PlayerManager playerManager) {
+  public MenuManager(TimerManager timerManager, PlayerManager playerManager, EnemyManager enemyManager) {
     // コンテナ
     menuRoot = new HBox();
     // メニュー
@@ -52,6 +52,7 @@ public class MenuManager {
     gameMenu[RESET].setFont(new Font(BUTTON_SIZE));
     gameMenu[RESET].setOnAction(event -> {
       timerManager.timerReset();
+      enemyManager.clearEnemies();
       gameMenu[PAUSE].setText("Pause");
     });
     // 3 → Exit

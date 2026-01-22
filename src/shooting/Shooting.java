@@ -27,8 +27,8 @@ public class Shooting extends Application {
 
         timerManager = new TimerManager();
         playerManager = new PlayerManager(root);
-        menuManager = new MenuManager(timerManager, playerManager);
         enemyManager = new EnemyManager(root, playerManager, timerManager);
+        menuManager = new MenuManager(timerManager, playerManager, enemyManager);
 
         // 表示物の追加
         root.getChildren().addAll(
