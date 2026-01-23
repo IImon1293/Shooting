@@ -23,6 +23,9 @@ public class EnemyManager {
   private final double MIN_SPEED = 2.0;
   private final double MAX_SPEED = 4.9;
 
+  // 生成した敵の数
+  public int allEnemyNum = 0;
+
   public EnemyManager(AnchorPane root, PlayerManager playerManager, TimerManager timerManager) {
     this.root = root;
     this.playerManager = playerManager;
@@ -39,7 +42,6 @@ public class EnemyManager {
     enemyTimeline.play();
   }
 
-  // --- 追加: リセット処理 ---
   public void clearEnemies() {
     // 1. Timelineを停止して最初に戻す
     enemyTimeline.stop();
@@ -58,11 +60,16 @@ public class EnemyManager {
 
   private void spawnEnemy() {
     for (int i = 0; i < SPAWN_NUM; i++) {
-      double spawnX = rd.nextDouble() * (playerManager.getWindowSize_X() - ENEMY_SIZE);
-      double spawnY = -ENEMY_SIZE;
+      // 座標
+      double spawnX = rd.nextDouble() * (playerManager.getWindowSize_X() - ENEMY_SIZE); // X はランダム
+      double spawnY = -ENEMY_SIZE; // Y は固定
+      // 敵を生成する
       Rectangle newEnemy = new Rectangle(spawnX, spawnY, ENEMY_SIZE, ENEMY_SIZE);
+      // 色
       newEnemy.setFill(Color.BLACK);
+      // 移動する速さ
       double randomSpeed = MIN_SPEED + (MAX_SPEED - MIN_SPEED) * rd.nextDouble();
+      // https://docs.oracle.com/javase/jp/8/javafx/api/javafx/scene/Node.html#setUserData-java.lang.Object-
       newEnemy.setUserData(randomSpeed);
       enemyList.add(newEnemy);
       root.getChildren().add(newEnemy);
