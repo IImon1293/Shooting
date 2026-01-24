@@ -43,18 +43,11 @@ public class EnemyManager {
   }
 
   public void clearEnemies() {
-    // 1. Timelineを停止して最初に戻す
     enemyTimeline.stop();
-
-    // 2. 画面上のRectangleをすべて削除
     for (Rectangle e : enemyList) {
       root.getChildren().remove(e);
     }
-
-    // 3. 管理リストを空にする
-    enemyList.clear();
-
-    // 4. 再びplay()を呼ぶことで、次のStart時からまた新しい間隔で生成が始まる
+    enemyList.clear(); // 生成済みの敵を消す
     enemyTimeline.play();
   }
 
@@ -69,7 +62,6 @@ public class EnemyManager {
       newEnemy.setFill(Color.BLACK);
       // 移動する速さ
       double randomSpeed = MIN_SPEED + (MAX_SPEED - MIN_SPEED) * rd.nextDouble();
-      // https://docs.oracle.com/javase/jp/8/javafx/api/javafx/scene/Node.html#setUserData-java.lang.Object-
       newEnemy.setUserData(randomSpeed);
       enemyList.add(newEnemy);
       root.getChildren().add(newEnemy);
